@@ -77,28 +77,43 @@
             <div>
                 <h1 class="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-2">
                     A Coreografia Oculta do Cálculo
-                    <span class="bg-sky-500/10 text-sky-400 border border-sky-500/20 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">v2.4 PRO</span>
                 </h1>
-                <p class="text-[10px] sm:text-xs text-slate-400 font-medium">Storyboard Pedagógico Interativo Multissensorial</p>
+                <p class="text-[10px] sm:text-xs text-slate-400 font-medium">Simulador Interativo</p>
             </div>
         </div>
         <div class="flex flex-col sm:items-end items-center text-center sm:text-right gap-0.5">
             <span class="text-[11px] sm:text-xs font-bold text-sky-400 flex items-center gap-1.5 bg-sky-950/50 px-3 py-1 rounded-full border border-sky-500/20">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                Prof. Marco Antonio Castro
+                Prof. Marco Castro &bull; Junho 2026
             </span>
-            <span class="text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-widest font-mono">Avaliação Prática &bull; Junho 2026</span>
         </div>
     </header>
 
     <!-- Layout Container Principal -->
     <div class="flex-1 flex flex-col md:flex-row md:h-[calc(100vh-77px)] md:overflow-hidden">
         
-        <!-- Sidebar de Navegação dos Módulos (Se adapta como menu deslizante horizontal em celulares) -->
-        <nav class="w-full md:w-72 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-800 flex flex-row md:flex-col p-3 gap-2 overflow-x-auto md:overflow-y-auto shrink-0 shadow-lg no-select z-20 no-scrollbar">
+        <!-- Dropdown de Navegação Mobile (Só aparece em telas menores que MD) -->
+        <div class="block md:hidden bg-slate-900 border-b border-slate-800 p-3.5 z-20 shrink-0">
+            <label for="module-select" class="sr-only">Selecione o Módulo</label>
+            <div class="relative">
+                <select id="module-select" onchange="switchModule(this.value)" class="w-full bg-slate-950 border border-slate-800 text-slate-200 rounded-xl px-4 py-3 font-semibold text-xs focus:outline-none focus:border-sky-500 appearance-none cursor-pointer">
+                    <option value="reta">1. Terreno da Reta (ℚ vs. ℝ)</option>
+                    <option value="limite">2. Jogo do Cerco (ε - δ)</option>
+                    <option value="teoremas">3. Teoremas de Existência (TVI / Weierstrass)</option>
+                    <option value="derivada">4. O Sonho da Tangente (Derivada)</option>
+                    <option value="integral">5. O Grande Clonador (Somas de Riemann)</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar de Navegação dos Módulos (Só aparece a partir de telas MD) -->
+        <nav class="hidden md:flex md:w-72 bg-slate-900 border-r border-slate-800 md:flex-col p-3 gap-2 md:overflow-y-auto shrink-0 shadow-lg no-select z-20 no-scrollbar">
             <div class="hidden md:block px-3 py-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono border-b border-slate-800 mb-2">Módulos de Exploração</div>
             
-            <button id="btn-reta" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all min-w-[170px] md:w-full" onclick="switchModule('reta')">
+            <button id="btn-reta" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all w-full" onclick="switchModule('reta')">
                 <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center border border-sky-500/20 shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12h16M4 12l4-4m-4 4l4 4m12-8l-4 4m4-4l-4-4"/></svg>
                 </div>
@@ -108,7 +123,7 @@
                 </div>
             </button>
 
-            <button id="btn-limite" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all min-w-[170px] md:w-full" onclick="switchModule('limite')">
+            <button id="btn-limite" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all w-full" onclick="switchModule('limite')">
                 <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20 shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4m12 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 </div>
@@ -118,7 +133,7 @@
                 </div>
             </button>
 
-            <button id="btn-teoremas" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all min-w-[170px] md:w-full" onclick="switchModule('teoremas')">
+            <button id="btn-teoremas" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all w-full" onclick="switchModule('teoremas')">
                 <div class="w-7 h-7 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center border border-violet-500/20 shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                 </div>
@@ -128,7 +143,7 @@
                 </div>
             </button>
 
-            <button id="btn-derivada" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all min-w-[170px] md:w-full" onclick="switchModule('derivada')">
+            <button id="btn-derivada" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all w-full" onclick="switchModule('derivada')">
                 <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/20 shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
                 </div>
@@ -138,7 +153,7 @@
                 </div>
             </button>
 
-            <button id="btn-integral" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all min-w-[170px] md:w-full" onclick="switchModule('integral')">
+            <button id="btn-integral" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all w-full" onclick="switchModule('integral')">
                 <div class="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center border border-rose-500/20 shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                 </div>
@@ -153,31 +168,31 @@
         <div class="flex-1 flex flex-col md:flex-row md:h-full md:overflow-hidden bg-slate-950">
             
             <!-- Workspace Central (Canvas Interativo) -->
-            <div class="flex-1 p-3 sm:p-4 lg:p-6 flex flex-col gap-4 md:h-full md:overflow-y-auto">
-                <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl p-4 flex-1 flex flex-col gap-3 relative glowing-panel">
+            <div class="flex-1 p-2 sm:p-4 lg:p-6 flex flex-col gap-3 md:h-full md:overflow-y-auto">
+                <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl p-3 sm:p-4 flex-1 flex flex-col gap-2 sm:gap-3 relative glowing-panel">
                     <div class="flex justify-between items-center no-select">
-                        <span id="canvas-badge" class="bg-sky-500/10 text-sky-400 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest border border-sky-500/20">Mapeador Ativo</span>
-                        <span class="text-[10px] text-slate-400 flex items-center gap-1.5 font-mono">
-                            <svg class="w-3.5 h-3.5 text-sky-400 animate-pulse shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
-                            Arraste os pontos ou deslize para rolar a tela!
+                        <span id="canvas-badge" class="bg-sky-500/10 text-sky-400 text-[10px] px-2 py-0.5 sm:px-3 sm:py-1 rounded-full font-bold uppercase tracking-widest border border-sky-500/20">Mapeador Ativo</span>
+                        <span class="text-[9px] sm:text-[10px] text-slate-400 flex items-center gap-1.5 font-mono">
+                            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sky-400 animate-pulse shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+                            Interaja no Canvas!
                         </span>
                     </div>
                     
-                    <!-- Container Responsivo para o Canvas de Alta Definição -->
-                    <div class="flex-1 min-h-[350px] md:min-h-0 relative bg-slate-950 border border-slate-800 rounded-xl overflow-hidden cursor-crosshair" id="canvasHolder">
+                    <!-- Container Responsivo para o Canvas de Alta Definição (Otimizado para Mobile) -->
+                    <div class="flex-1 min-h-[220px] h-[220px] md:min-h-0 md:h-full relative bg-slate-950 border border-slate-800 rounded-xl overflow-hidden cursor-crosshair" id="canvasHolder">
                         <canvas id="labCanvas" class="block w-full h-full"></canvas>
                     </div>
                 </div>
 
                 <!-- Painel de Checkpoints de Ação Relacionados -->
-                <div id="checkpoint-card" class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col gap-2 shadow-lg">
+                <div id="checkpoint-card" class="bg-slate-900 border border-slate-800 rounded-xl p-3 sm:p-4 flex flex-col gap-2 shadow-lg text-xs">
                     <!-- Conteúdo reativo injetado dinamicamente -->
                 </div>
             </div>
 
             <!-- Painel de Controles Lateral -->
-            <div class="w-full lg:w-96 bg-slate-900 border-t lg:border-t-0 lg:border-l border-slate-800 p-6 flex flex-col gap-6 shrink-0 shadow-2xl z-10 md:h-full md:overflow-y-auto">
-                <div id="panelControls" class="flex flex-col gap-6">
+            <div class="w-full lg:w-96 bg-slate-900 border-t lg:border-t-0 lg:border-l border-slate-800 p-4 sm:p-6 flex flex-col gap-4 sm:gap-6 shrink-0 shadow-2xl z-10 md:h-full md:overflow-y-auto">
+                <div id="panelControls" class="flex flex-col gap-4 sm:gap-6">
                     <!-- Controladores específicos injetados via JS -->
                 </div>
             </div>
@@ -1263,6 +1278,12 @@
             if (state.integral.animInterval) {
                 clearInterval(state.integral.animInterval);
                 state.integral.isAnimating = false;
+            }
+
+            // Sincronizar o dropdown mobile se ele existir na página
+            const selectMobile = document.getElementById('module-select');
+            if (selectMobile) {
+                selectMobile.value = mod;
             }
 
             document.querySelectorAll('.nav-btn').forEach(btn => {
