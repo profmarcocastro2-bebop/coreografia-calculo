@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Coreografia Oculta do Cálculo — Simulador Interativo Premium</title>
+    <!-- Tailwind CSS para Layout Moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- KaTeX para Renderização de LaTeX Perfeita -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <style>
+        /* Estilização customizada para barras de rolagem e sliders premium */
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            border-radius: 9999px;
+            background: #334155;
+            outline: none;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #38bdf8;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.1s;
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+        }
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+            background: #0ea5e9;
+        }
+        /* Custom scrollbar para visual técnico */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        /* Ocultar barra de rolagem mantendo funcionalidade no swiper de celular */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE e Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* Efeito de brilho de alta performance nos painéis ativos */
+        .glowing-panel {
+            box-shadow: 0 0 25px rgba(14, 165, 233, 0.08);
+        }
+        /* Impedir seleção acidental de texto durante interações de arrasto */
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased md:overflow-hidden">
+
+    <!-- Header Principal -->
+    <header class="bg-slate-900 border-b border-slate-800 shadow-xl px-4 py-3 sm:px-6 sm:py-4 flex flex-col sm:flex-row justify-between items-center gap-3 z-10 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="bg-gradient-to-tr from-sky-500 to-indigo-600 text-white p-2 sm:p-2.5 rounded-xl text-xl sm:text-2xl font-black shadow-lg shadow-sky-500/25">&int;</div>
+            <div>
+                <h1 class="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-2">
+                    A Coreografia Oculta do Cálculo
+                    <span class="bg-sky-500/10 text-sky-400 border border-sky-500/20 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">v2.4 PRO</span>
+                </h1>
+                <p class="text-[10px] sm:text-xs text-slate-400 font-medium">Storyboard Pedagógico Interativo Multissensorial</p>
+            </div>
+        </div>
+        <div class="flex flex-col sm:items-end items-center text-center sm:text-right gap-0.5">
+            <span class="text-[11px] sm:text-xs font-bold text-sky-400 flex items-center gap-1.5 bg-sky-950/50 px-3 py-1 rounded-full border border-sky-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Prof. Marco Antonio Castro
+            </span>
+            <span class="text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-widest font-mono">Avaliação Prática &bull; Junho 2026</span>
+        </div>
+    </header>
+
+    <!-- Layout Container Principal -->
+    <div class="flex-1 flex flex-col md:flex-row md:h-[calc(100vh-77px)] md:overflow-hidden">
+        
+        <!-- Sidebar de Navegação dos Módulos (Se adapta como menu deslizante horizontal em celulares) -->
+        <nav class="w-full md:w-72 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-800 flex flex-row md:flex-col p-3 gap-2 overflow-x-auto md:overflow-y-auto shrink-0 shadow-lg no-select z-20 no-scrollbar">
+            <div class="hidden md:block px-3 py-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono border-b border-slate-800 mb-2">Módulos de Exploração</div>
+            
+            <button id="btn-reta" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all min-w-[170px] md:w-full" onclick="switchModule('reta')">
+                <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center border border-sky-500/20 shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12h16M4 12l4-4m-4 4l4 4m12-8l-4 4m4-4l-4-4"/></svg>
+                </div>
+                <div>
+                    <div class="font-bold text-slate-200">1. Terreno da Reta</div>
+                    <div class="text-[9px] text-slate-500 font-mono">Topologia de $\mathbb{Q}$ vs. $\mathbb{R}$</div>
+                </div>
+            </button>
+
+            <button id="btn-limite" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all min-w-[170px] md:w-full" onclick="switchModule('limite')">
+                <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20 shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4m12 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </div>
+                <div>
+                    <div class="font-bold text-slate-200">2. Jogo do Cerco (Lím)</div>
+                    <div class="text-[9px] text-slate-500 font-mono">Controle de $\varepsilon-\delta$</div>
+                </div>
+            </button>
+
+            <button id="btn-teoremas" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all min-w-[170px] md:w-full" onclick="switchModule('teoremas')">
+                <div class="w-7 h-7 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center border border-violet-500/20 shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <div>
+                    <div class="font-bold text-slate-200">3. Teoremas de Existência</div>
+                    <div class="text-[9px] text-slate-500 font-mono">Teoremas de TVI e Weierstrass</div>
+                </div>
+            </button>
+
+            <button id="btn-derivada" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all min-w-[170px] md:w-full" onclick="switchModule('derivada')">
+                <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/20 shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+                </div>
+                <div>
+                    <div class="font-bold text-slate-200">4. O Sonho da Tangente</div>
+                    <div class="text-[9px] text-slate-500 font-mono">Secante ao Limite Infinitesimal</div>
+                </div>
+            </button>
+
+            <button id="btn-integral" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-xs text-left transition-all min-w-[170px] md:w-full" onclick="switchModule('integral')">
+                <div class="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center border border-rose-500/20 shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                </div>
+                <div>
+                    <div class="font-bold text-slate-200">5. O Grande Clonador</div>
+                    <div class="text-[9px] text-slate-500 font-mono">Somas de Riemann e Integrais</div>
+                </div>
+            </button>
+        </nav>
+
+        <!-- Palco Principal (Workspace + Controles) -->
+        <div class="flex-1 flex flex-col md:flex-row md:h-full md:overflow-hidden bg-slate-950">
+            
+            <!-- Workspace Central (Canvas Interativo) -->
+            <div class="flex-1 p-3 sm:p-4 lg:p-6 flex flex-col gap-4 md:h-full md:overflow-y-auto">
+                <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl p-4 flex-1 flex flex-col gap-3 relative glowing-panel">
+                    <div class="flex justify-between items-center no-select">
+                        <span id="canvas-badge" class="bg-sky-500/10 text-sky-400 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest border border-sky-500/20">Mapeador Ativo</span>
+                        <span class="text-[10px] text-slate-400 flex items-center gap-1.5 font-mono">
+                            <svg class="w-3.5 h-3.5 text-sky-400 animate-pulse shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+                            Arraste os pontos ou deslize para rolar a tela!
+                        </span>
+                    </div>
+                    
+                    <!-- Container Responsivo para o Canvas de Alta Definição -->
+                    <div class="flex-1 min-h-[350px] md:min-h-0 relative bg-slate-950 border border-slate-800 rounded-xl overflow-hidden cursor-crosshair" id="canvasHolder">
+                        <canvas id="labCanvas" class="block w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- Painel de Checkpoints de Ação Relacionados -->
+                <div id="checkpoint-card" class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col gap-2 shadow-lg">
+                    <!-- Conteúdo reativo injetado dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Painel de Controles Lateral -->
+            <div class="w-full lg:w-96 bg-slate-900 border-t lg:border-t-0 lg:border-l border-slate-800 p-6 flex flex-col gap-6 shrink-0 shadow-2xl z-10 md:h-full md:overflow-y-auto">
+                <div id="panelControls" class="flex flex-col gap-6">
+                    <!-- Controladores específicos injetados via JS -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script de Simulação e Renderização Premium -->
+    <script>
+        // =========================================================================
+        // 1. INICIALIZAÇÃO E CONTROLE DE ESTADOS DO SINALIZADOR
+        // =========================================================================
+        const canvas = document.getElementById('labCanvas');
+        const ctx = canvas.getContext('2d');
+        const holder = document.getElementById('canvasHolder');
+        const panel = document.getElementById('panelControls');
+        const checkpointCard = document.getElementById('checkpoint-card');
+
+        let activeModule = 'reta';
+        let mouseX = 0, mouseY = 0;
+        let isDragging = false;
+        let touchInteractiveActive = false; // Rastreia se o toque atual é uma interação física legítima
+
+        // Estado de tamanho prévio para impedir redimensionamentos fantasmas ao rolar em smartphones
+        let lastWidth = 0;
+        let lastHeight = 0;
+
+        // Estado central com maior precisão pedagógica
+        let state = {
+            reta: { mode: 'Q', zoom: 1, clickedPoint: null, handleX: 1.0 },
+            limite: { epsilon: 0.4, delta: 0.15, dragMode: null }, 
+            teoremas: { type: 'weierstrass', closed: true, dragY: null, k: 1.5, jump: false, hoverMaxMin: null },
+            derivada: { h: 1.5, draggingB: false },
+            integral: { n: 10, mode: 'superior', isAnimating: false, animInterval: null, soundEnabled: false }
+        };
+
+        // Escalonamento lógico do canvas
+        let logicalWidth = 0;
+        let logicalHeight = 0;
+
+        // Sistema de renderização matemática assíncrona
+        function safeRenderMath() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Web Audio API
+        let audioCtx = null;
+        function playChime(freq, duration = 0.08) {
+            if (!state.integral.soundEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                
+                gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.warn("Áudio não suportado ou bloqueado:", e);
+            }
+        }
+
+        // Equações Curvas
+        function f_derivada(x) { return 0.25 * x * x; }
+        function f_derivada_prime(x) { return 0.5 * x; }
+
+        function getDerivadaParams() {
+            const scale = Math.min(logicalWidth, logicalHeight) / 5.2;
+            const originX = logicalWidth / 2 - 1.8 * scale;
+            const originY = logicalHeight / 2 + 1.2 * scale;
+            return { originX, originY, scale };
+        }
+
+        // Mapeador geométrico para garantir visibilidade integral do limite \varepsilon-\delta em qualquer tamanho
+        function getLimiteParams() {
+            const scaleX = Math.min(100, Math.max(45, logicalWidth / 6.2));
+            // Escala vertical responsiva que impede que L=7 ultrapasse o topo do canvas
+            const scaleY = Math.min(40, Math.max(16, (logicalHeight * 0.48) / 7));
+            const originX = logicalWidth / 2 - (2 * scaleX) + 30;
+            const originY = logicalHeight - Math.max(40, logicalHeight * 0.15);
+            return { originX, originY, scaleX, scaleY };
+        }
+
+        // =========================================================================
+        // 2. SISTEMA DE RENDERIZAÇÃO DO CANVAS
+        // =========================================================================
+        function drawReta() {
+            const cy = logicalHeight / 2;
+            const z = state.reta.zoom;
+            const startX = logicalWidth / 2;
+            const step = 45 * z;
+
+            // Linhas de fundo
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 1;
+            for (let i = -10; i <= 10; i++) {
+                let gx = startX + i * step;
+                if (gx > 0 && gx < logicalWidth) {
+                    ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, logicalHeight); ctx.stroke();
+                }
+            }
+
+            // Reta Base
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = state.reta.mode === 'Q' ? '#475569' : '#0284c7';
+            ctx.beginPath();
+            ctx.moveTo(50, cy);
+            ctx.lineTo(logicalWidth - 50, cy);
+            ctx.stroke();
+
+            if (state.reta.mode === 'Q') {
+                for (let x = 60; x < logicalWidth - 60; x += 14) {
+                    const mappedVal = (x - startX) / step;
+                    
+                    const irrationals = [Math.sqrt(2), Math.sqrt(3), Math.PI - 2, Math.E - 2];
+                    let isFractured = false;
+                    let targetLabel = "";
+                    for (let irr of irrationals) {
+                        if (Math.abs(mappedVal - irr) < (0.12 / z)) {
+                            isFractured = true;
+                            targetLabel = irr === Math.sqrt(2) ? "√2" : "Irr.";
+                            break;
+                        }
+                    }
+
+                    if (isFractured && z > 2) {
+                        ctx.fillStyle = '#ef4444';
+                        ctx.beginPath(); ctx.arc(x, cy, 3.5 + z/6, 0, Math.PI * 2); ctx.fill();
+                        
+                        ctx.font = 'bold 9px monospace';
+                        ctx.fillStyle = '#f87171';
+                        ctx.fillText(`Lacuna ${targetLabel}`, x - 22, cy - 16);
+                    } else {
+                        ctx.fillStyle = '#38bdf8';
+                        ctx.beginPath(); ctx.arc(x, cy, 2, 0, Math.PI * 2); ctx.fill();
+                    }
+                }
+            } else {
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#06b6d4';
+                ctx.beginPath();
+                ctx.moveTo(50, cy);
+                ctx.lineTo(logicalWidth - 50, cy);
+                ctx.stroke();
+            }
+
+            const pAcX = startX + step * 1; 
+            const pIsX = startX + step * 5; 
+
+            // Ponto de Acumulação
+            if (pAcX > 50 && pAcX < logicalWidth - 50) {
+                ctx.fillStyle = '#10b981';
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath(); ctx.arc(pAcX, cy, 8, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+                ctx.font = 'bold 11px sans-serif';
+                ctx.fillStyle = '#34d399';
+                ctx.fillText("x = 1 (Acumulação)", pAcX - 45, cy + 24);
+
+                if (state.reta.clickedPoint === 'acumulacao') {
+                    ctx.strokeStyle = 'rgba(16, 185, 129, 0.3)';
+                    ctx.fillStyle = 'rgba(16, 185, 129, 0.05)';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.arc(pAcX, cy, step * 0.8, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+                    
+                    ctx.fillStyle = '#10b981';
+                    for (let n = 1; n < 8; n++) {
+                        let ptLeft = pAcX - (step / n);
+                        let ptRight = pAcX + (step / n);
+                        if (ptLeft > 50) { ctx.beginPath(); ctx.arc(ptLeft, cy, 3, 0, Math.PI * 2); ctx.fill(); }
+                        if (ptRight < logicalWidth - 50) { ctx.beginPath(); ctx.arc(ptRight, cy, 3, 0, Math.PI * 2); ctx.fill(); }
+                    }
+                }
+            }
+
+            // Ponto Isolado
+            if (pIsX > 50 && pIsX < logicalWidth - 50) {
+                ctx.fillStyle = '#f43f5e';
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath(); ctx.arc(pIsX, cy, 8, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+                ctx.font = 'bold 11px sans-serif';
+                ctx.fillStyle = '#fb7185';
+                ctx.fillText("x = 5 (Ponto Isolado)", pIsX - 55, cy + 24);
+
+                if (state.reta.clickedPoint === 'isolado') {
+                    ctx.strokeStyle = 'rgba(244, 63, 94, 0.3)';
+                    ctx.fillStyle = 'rgba(244, 63, 94, 0.05)';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.arc(pIsX, cy, step * 1.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+                    ctx.font = 'italic 10px sans-serif';
+                    ctx.fillStyle = '#f43f5e';
+                    ctx.fillText("Vizinhança Deserta", pIsX - 60, cy - 20);
+                }
+            }
+        }
+
+        function drawLimite() {
+            const { originX, originY, scaleX, scaleY } = getLimiteParams();
+
+            const x0 = 2;
+            const L = 7;
+            const eps = state.limite.epsilon;
+            const del = state.limite.delta;
+
+            // Grade
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 1;
+            for(let gx = 30; gx < logicalWidth - 30; gx += 30) {
+                ctx.beginPath(); ctx.moveTo(gx, 30); ctx.lineTo(gx, logicalHeight - 30); ctx.stroke();
+            }
+            for(let gy = 30; gy < logicalHeight - 30; gy += 30) {
+                ctx.beginPath(); ctx.moveTo(30, gy); ctx.lineTo(logicalWidth - 30, gy); ctx.stroke();
+            }
+
+            // Eixos
+            ctx.strokeStyle = '#64748b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(30, originY); ctx.lineTo(logicalWidth - 30, originY);
+            ctx.moveTo(originX, 30); ctx.lineTo(originX, logicalHeight - 30);
+            ctx.stroke();
+
+            function toPixel(x, y) {
+                return { x: originX + (x * scaleX), y: originY - (y * scaleY) };
+            }
+
+            const pTarget = toPixel(x0, L);
+
+            // Faixas de Tolerância vertical (\varepsilon)
+            const pEpsTop = toPixel(0, L + eps);
+            const pEpsBot = toPixel(0, L - eps);
+            ctx.fillStyle = 'rgba(245, 158, 11, 0.06)';
+            ctx.fillRect(30, pEpsTop.y, logicalWidth - 60, pEpsBot.y - pEpsTop.y);
+
+            // Faixas de Tolerância horizontal (\\delta)
+            const pDelLeft = toPixel(x0 - del, 0);
+            const pDelRight = toPixel(x0 + del, 0);
+            ctx.fillStyle = 'rgba(56, 189, 248, 0.06)';
+            ctx.fillRect(pDelLeft.x, 30, pDelRight.x - pDelLeft.x, logicalHeight - 60);
+
+            // Linhas tracejadas horizontais do erro (\varepsilon)
+            ctx.strokeStyle = 'rgba(245, 158, 11, 0.6)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(30, pEpsTop.y); ctx.lineTo(logicalWidth - 30, pEpsTop.y);
+            ctx.moveTo(30, pEpsBot.y); ctx.lineTo(logicalWidth - 30, pEpsBot.y);
+            ctx.stroke();
+
+            // Linhas tracejadas horizontais da largura de controle (\\delta)
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.6)';
+            ctx.beginPath();
+            ctx.moveTo(pDelLeft.x, 30); ctx.lineTo(pDelLeft.x, logicalHeight - 60);
+            ctx.moveTo(pDelRight.x, 30); ctx.lineTo(pDelRight.x, logicalHeight - 60);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Curva f(x) = 4x - 1
+            const isSafe = del <= (eps / 4);
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = isSafe ? '#10b981' : '#f43f5e';
+
+            ctx.beginPath();
+            for (let sx = 0.5; sx <= 2.8; sx += 0.02) {
+                let sy = 4 * sx - 1;
+                let pt = toPixel(sx, sy);
+                if (sx === 0.5) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            }
+            ctx.stroke();
+
+            if (!isSafe) {
+                ctx.fillStyle = '#f43f5e';
+                for (let sx = x0 - del; sx <= x0 + del; sx += del / 5) {
+                    let sy = 4 * sx - 1;
+                    if (Math.abs(sy - L) > eps) {
+                        let pt = toPixel(sx, sy);
+                        ctx.beginPath(); ctx.arc(pt.x, pt.y, 6, 0, Math.PI * 2); ctx.fill();
+                    }
+                }
+            }
+
+            ctx.strokeStyle = isSafe ? '#10b981' : '#f43f5e';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(originX, pTarget.y); ctx.lineTo(pTarget.x, pTarget.y);
+            ctx.moveTo(pTarget.x, originY); ctx.lineTo(pTarget.x, pTarget.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#0f172a';
+            ctx.strokeStyle = isSafe ? '#10b981' : '#f43f5e';
+            ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.arc(pTarget.x, pTarget.y, 7, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+            // Rotulando eixos de forma responsiva
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = 'bold 11px sans-serif';
+            ctx.fillText("x₀ = 2", pTarget.x - 14, originY + 22);
+            ctx.fillText("L = 7", originX - 35, pTarget.y + 4);
+
+            ctx.font = 'bold 13px sans-serif';
+            if (isSafe) {
+                ctx.fillStyle = '#10b981';
+                ctx.fillText("✔ CERCO SEGURO (Imagens Presas)", originX + scaleX * 0.9, 50);
+            } else {
+                ctx.fillStyle = '#f43f5e';
+                ctx.fillText("✘ FUGA DETECTADA (Reduza o Delta)", originX + scaleX * 0.9, 50);
+            }
+        }
+
+        function drawTeoremas() {
+            const type = state.teoremas.type;
+            const isClosed = state.teoremas.closed;
+
+            const originX = 60;
+            const originY = logicalHeight - 60;
+            const w = logicalWidth - 120;
+            const h = logicalHeight - 120;
+
+            ctx.strokeStyle = '#475569';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(originX, originY); ctx.lineTo(originX + w, originY);
+            ctx.moveTo(originX, originY); ctx.lineTo(originX, originY - h);
+            ctx.stroke();
+
+            if (type === 'weierstrass') {
+                const startX = originX + w * 0.15;
+                const endX = originX + w * 0.85;
+
+                ctx.strokeStyle = '#6366f1';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(startX, originY - h * 0.25);
+                
+                if (isClosed) {
+                    ctx.bezierCurveTo(startX + w*0.2, originY - h*0.85, startX + w*0.4, originY - h*0.1, endX, originY - h*0.55);
+                } else {
+                    ctx.bezierCurveTo(startX + w*0.2, originY - h*0.2, startX + w*0.4, originY - h*0.3, endX, originY - h*0.92);
+                }
+                ctx.stroke();
+
+                ctx.strokeStyle = '#334155';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([4, 4]);
+                ctx.beginPath();
+                ctx.moveTo(startX, originY); ctx.lineTo(startX, originY - h);
+                ctx.moveTo(endX, originY); ctx.lineTo(endX, originY - h);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                ctx.fillStyle = isClosed ? '#10b981' : '#0f172a';
+                ctx.strokeStyle = isClosed ? '#10b981' : '#ef4444';
+                ctx.lineWidth = 2.5;
+
+                ctx.beginPath();
+                ctx.arc(startX, originY - h * 0.25, 6, 0, Math.PI*2);
+                ctx.fill(); ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(endX, isClosed ? (originY - h*0.55) : (originY - h*0.92), 6, 0, Math.PI*2);
+                ctx.fill(); ctx.stroke();
+
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.fillText(isClosed ? "a" : "(a", startX - 8, originY + 20);
+                ctx.fillText(isClosed ? "b" : "b)", endX - 8, originY + 20);
+
+                if (isClosed) {
+                    const maxPt = { x: startX + w*0.13, y: originY - h*0.61 };
+                    ctx.fillStyle = '#f59e0b';
+                    ctx.beginPath(); ctx.arc(maxPt.x, maxPt.y, 8, 0, Math.PI * 2); ctx.fill();
+                    ctx.font = 'bold 11px sans-serif';
+                    ctx.fillStyle = '#f59e0b';
+                    ctx.fillText("Máximo Absoluto ✔", maxPt.x + 12, maxPt.y - 4);
+                } else {
+                    ctx.fillStyle = '#f43f5e';
+                    ctx.font = 'bold 12px sans-serif';
+                    ctx.fillText("⚠️ O ponto máximo sumiu na borda aberta!", startX + 25, 45);
+                }
+            } 
+            else if (type === 'tvi') {
+                const startX = originX + w * 0.2;
+                const endX = originX + w * 0.8;
+                const yA = originY - h * 0.25;
+                const yB = originY - h * 0.85;
+
+                const yK = originY - (state.teoremas.k / 3) * h;
+                
+                ctx.strokeStyle = '#f59e0b';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(originX, yK); ctx.lineTo(originX + w, yK);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                ctx.fillStyle = '#f59e0b';
+                ctx.font = 'bold 11px sans-serif';
+                ctx.fillText(`Nível k = ${state.teoremas.k.toFixed(2)}`, originX + 10, yK - 8);
+
+                if (!state.teoremas.jump) {
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.moveTo(startX, yA);
+                    ctx.bezierCurveTo(startX + w*0.3, yA - h*0.1, startX + w*0.2, yB + h*0.1, endX, yB);
+                    ctx.stroke();
+
+                    const cX = startX + w * 0.26 + (state.teoremas.k * 30);
+                    
+                    ctx.fillStyle = '#38bdf8';
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.arc(cX, yK, 7, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+                    
+                    ctx.fillStyle = '#38bdf8';
+                    ctx.fillText("Interseção c garantida", cX - 45, yK + 22);
+                } else {
+                    ctx.strokeStyle = '#f43f5e';
+                    ctx.lineWidth = 4;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(startX, yA);
+                    ctx.lineTo(startX + w*0.3, yA - h*0.05);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.moveTo(startX + w*0.3, yB + h*0.15);
+                    ctx.lineTo(endX, yB);
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#0f172a';
+                    ctx.strokeStyle = '#f43f5e';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath(); ctx.arc(startX + w*0.3, yA - h*0.05, 5, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+
+                    ctx.fillStyle = '#f43f5e';
+                    ctx.beginPath(); ctx.arc(startX + w*0.3, yB + h*0.15, 5, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+
+                    const gapTop = yB + h*0.15;
+                    const gapBottom = yA - h*0.05;
+
+                    if (yK < gapBottom && yK > gapTop) {
+                        ctx.fillStyle = '#f43f5e';
+                        ctx.font = 'bold 12px sans-serif';
+                        ctx.fillText("❌ Salto Quântico! Sem interseção em c.", startX + 15, 45);
+                    }
+                }
+            }
+        }
+
+        function drawDerivada() {
+            const hDist = state.derivada.h;
+            const { originX, originY, scale } = getDerivadaParams();
+
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(30, originY); ctx.lineTo(logicalWidth - 30, originY);
+            ctx.moveTo(originX, 30); ctx.lineTo(originX, logicalHeight - 30);
+            ctx.stroke();
+
+            function toPixel(x) {
+                return { x: originX + x * scale, y: originY - f_derivada(x) * scale };
+            }
+
+            const xA = 1.2;
+            const pA = toPixel(xA);
+            const xB = xA + hDist;
+            const pB = toPixel(xB);
+
+            ctx.strokeStyle = '#475569';
+            ctx.lineWidth = 3.5;
+            ctx.beginPath();
+            for (let x = 0; x <= 3.8; x += 0.05) {
+                let p = toPixel(x);
+                if (x === 0) ctx.moveTo(p.x, p.y);
+                else ctx.lineTo(p.x, p.y);
+            }
+            ctx.stroke();
+
+            // Triângulo de Aproximação Incremental se h for expressivo
+            if (hDist > 0.06) {
+                ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
+                ctx.fillStyle = 'rgba(148, 163, 184, 0.03)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(pA.x, pA.y);
+                ctx.lineTo(pB.x, pA.y);
+                ctx.lineTo(pB.x, pB.y);
+                ctx.closePath();
+                ctx.fill(); ctx.stroke();
+
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '10px monospace';
+                ctx.fillText(`dx = h`, (pA.x + pB.x)/2 - 15, pA.y + 14);
+                ctx.fillText(`dy`, pB.x + 8, (pA.y + pB.y)/2 + 4);
+
+                // Reta Secante (Linha Vermelha de Aproximação Média) - CORRIGIDA!
+                ctx.strokeStyle = '#f43f5e';
+                ctx.lineWidth = 2;
+                const m_screen = (pB.y - pA.y) / (pB.x - pA.x);
+                ctx.beginPath();
+                ctx.moveTo(pA.x - 120, pA.y + m_screen * -120);
+                ctx.lineTo(pA.x + 220, pA.y + m_screen * 220);
+                ctx.stroke();
+            } else {
+                // Reta Tangente Limite Realizada (Verde Neon) - CORRIGIDA!
+                ctx.strokeStyle = '#10b981';
+                ctx.lineWidth = 3.5;
+                const slope = f_derivada_prime(xA);
+                const m_screen = -slope;
+                ctx.beginPath();
+                ctx.moveTo(pA.x - 180, pA.y + m_screen * -180);
+                ctx.lineTo(pA.x + 220, pA.y + m_screen * 220);
+                ctx.stroke();
+            }
+
+            ctx.fillStyle = '#0284c7';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.arc(pA.x, pA.y, 6, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+            ctx.fillStyle = '#38bdf8';
+            ctx.font = 'bold 11px sans-serif';
+            ctx.fillText("A (Fixo)", pA.x - 45, pA.y - 12);
+
+            if (hDist > 0.06) {
+                ctx.fillStyle = '#f59e0b';
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath(); ctx.arc(pB.x, pB.y, 6, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+                ctx.fillStyle = '#fbbf24';
+                ctx.fillText("B (Arraste-me)", pB.x + 10, pB.y - 5);
+            }
+
+            // Microscópio local de visualização da linearidade
+            const lensRadius = 60;
+            const lensX = logicalWidth - lensRadius - 25;
+            const lensY = lensRadius + 25;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(lensX, lensY, lensRadius, 0, Math.PI * 2);
+            ctx.clip();
+
+            ctx.fillStyle = '#090d16';
+            ctx.fillRect(lensX - lensRadius, lensY - lensRadius, lensRadius * 2, lensRadius * 2);
+
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 0.5;
+            for (let i = -lensRadius; i <= lensRadius; i += 15) {
+                ctx.beginPath(); ctx.moveTo(lensX + i, lensY - lensRadius); ctx.lineTo(lensX + i, lensY + lensRadius); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(lensX - lensRadius, lensY + i); ctx.lineTo(lensX + lensRadius, lensY + i); ctx.stroke();
+            }
+
+            const zoomFactor = 12;
+            ctx.translate(lensX, lensY);
+
+            ctx.strokeStyle = '#475569';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let lx = -lensRadius; lx <= lensRadius; lx++) {
+                const mathX = xA + (lx / (scale * zoomFactor));
+                const mathY = f_derivada(mathX);
+                const screenY = - (mathY - f_derivada(xA)) * scale * zoomFactor;
+                if (lx === -lensRadius) ctx.moveTo(lx, screenY);
+                else ctx.lineTo(lx, screenY);
+            }
+            ctx.stroke();
+
+            // Traçar secante/tangente ampliada - CORRIGIDA!
+            ctx.strokeStyle = hDist > 0.06 ? '#f43f5e' : '#10b981';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            const currentSlope = hDist > 0.06 ? (f_derivada(xB) - f_derivada(xA)) / hDist : f_derivada_prime(xA);
+            ctx.moveTo(-lensRadius, currentSlope * lensRadius);
+            ctx.lineTo(lensRadius, -currentSlope * lensRadius);
+            ctx.stroke();
+
+            ctx.fillStyle = '#0284c7';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(0, 0, 4, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+            ctx.restore();
+
+            ctx.strokeStyle = '#0284c7';
+            ctx.lineWidth = 3.5;
+            ctx.beginPath(); ctx.arc(lensX, lensY, lensRadius, 0, Math.PI * 2); ctx.stroke();
+
+            ctx.font = 'bold 9px monospace';
+            ctx.fillStyle = '#38bdf8';
+            ctx.fillText("LENTE 12X (A)", lensX - 32, lensY + lensRadius + 14);
+        }
+
+        function drawIntegral() {
+            const n = state.integral.n;
+            const mode = state.integral.mode;
+            const originX = 60;
+            const originY = logicalHeight - 60;
+            const graphWidth = logicalWidth - 120;
+            const graphHeight = logicalHeight - 120;
+
+            function f(x) { return (x * x) / 3; }
+
+            const xStart = 0;
+            const xEnd = 3;
+            const dx = (xEnd - xStart) / n;
+            const pixelStepX = graphWidth / n;
+
+            ctx.lineWidth = 1;
+            for (let i = 0; i < n; i++) {
+                let rx = originX + i * pixelStepX;
+                
+                let targetMathX = xStart + i * dx; 
+                if (mode === 'superior' || mode === 'direita') {
+                    targetMathX = xStart + (i + 1) * dx;
+                } else if (mode === 'medio') {
+                    targetMathX = xStart + (i + 0.5) * dx;
+                }
+
+                let hMath = f(targetMathX);
+                let hPixel = (hMath / 3) * graphHeight; 
+                let ry = originY - hPixel;
+
+                if (mode === 'trap') {
+                    let hLeftMath = f(xStart + i * dx);
+                    let hRightMath = f(xStart + (i + 1) * dx);
+                    let hLeftPixel = (hLeftMath / 3) * graphHeight;
+                    let hRightPixel = (hRightMath / 3) * graphHeight;
+
+                    ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+                    ctx.strokeStyle = 'rgba(56, 189, 248, 0.6)';
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(rx, originY);
+                    ctx.lineTo(rx, originY - hLeftPixel);
+                    ctx.lineTo(rx + pixelStepX, originY - hRightPixel);
+                    ctx.lineTo(rx + pixelStepX, originY);
+                    ctx.closePath();
+                    ctx.fill(); ctx.stroke();
+                } else {
+                    ctx.fillStyle = mode === 'superior' ? 'rgba(244, 63, 94, 0.25)' : 'rgba(16, 185, 129, 0.25)';
+                    ctx.strokeStyle = mode === 'superior' ? 'rgba(244, 63, 94, 0.6)' : 'rgba(16, 185, 129, 0.6)';
+
+                    ctx.fillRect(rx, ry, pixelStepX, hPixel);
+                    if (n < 60) ctx.strokeRect(rx, ry, pixelStepX, hPixel);
+                }
+            }
+
+            // Curva Real
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            for (let i = 0; i <= 100; i++) {
+                let cx = xStart + (i / 100) * (xEnd - xStart);
+                let cy = f(cx);
+                let px = originX + (i / 100) * graphWidth;
+                let py = originY - (cy / 3) * graphHeight;
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+
+            ctx.strokeStyle = '#64748b';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(originX, originY); ctx.lineTo(originX + graphWidth, originY);
+            ctx.moveTo(originX, originY); ctx.lineTo(originX, originY - graphHeight);
+            ctx.stroke();
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = 'bold 11px monospace';
+            ctx.fillText("0", originX - 12, originY + 18);
+            ctx.fillText("3", originX + graphWidth - 5, originY + 18);
+        }
+
+        function draw() {
+            // Se as dimensões do canvas ainda não estão mapeadas corretamente, não desenha para evitar coordenadas inválidas
+            if (logicalWidth <= 0 || logicalHeight <= 0) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (activeModule === 'reta') drawReta();
+            else if (activeModule === 'limite') drawLimite();
+            else if (activeModule === 'teoremas') drawTeoremas();
+            else if (activeModule === 'derivada') drawDerivada();
+            else if (activeModule === 'integral') drawIntegral();
+        }
+
+        // =========================================================================
+        // 3. ATUALIZADOR INTEGRAL DE FEEDBACKS E SINCRO DE TEXTOS (KATEX)
+        // =========================================================================
+        function updateFeedbacks() {
+            if (activeModule === 'reta') {
+                const fbBox = document.getElementById('reta-feedback');
+                if (fbBox) {
+                    if (state.reta.mode === 'Q') {
+                        fbBox.className = "bg-amber-500/10 text-amber-300 border border-amber-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                        fbBox.innerHTML = `<strong>Fendas Ocultas:</strong> No modo racional $\\mathbb{Q}$, a reta possui furos imperceptíveis (pontos irracionais como $\\sqrt{2}$). Se você der zoom, a continuidade quebra, impossibilitando que certos limites se realizem.`;
+                    } else {
+                        fbBox.className = "bg-sky-500/10 text-sky-300 border border-sky-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                        fbBox.innerHTML = `<strong>Plenitude Real ($\\mathbb{R}$):</strong> O asfalto da continuidade é impenetrável e selado por aproximações de Cauchy. A reta comporta limites em qualquer nível sem falhar.`;
+                    }
+                }
+
+                checkpointCard.innerHTML = `
+                    <h4 class="font-bold text-sky-400 text-xs flex items-center gap-2 uppercase tracking-wider">⚡ Checkpoint de Ação 1: O Teste do Eremita</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">Considere o conjunto $A = (0, 2) \\cup \\{5\\}$. Clique em <strong>x = 1 (Acumulação)</strong> ou <strong>x = 5 (Eremita)</strong> diretamente no gráfico para ver as vizinhanças infinitesimais.</p>
+                    <div id="checkpoint-action-res" class="text-xs p-3 bg-slate-950 rounded-lg border border-slate-800 mt-2 font-semibold text-slate-200">
+                        💡 Toque nos círculos desenhados no gráfico para disparar as análises...
+                    </div>
+                `;
+
+                if (state.reta.clickedPoint) {
+                    const resBox = document.getElementById('checkpoint-action-res');
+                    if (state.reta.clickedPoint === 'acumulacao') {
+                        resBox.innerHTML = `🟢 <strong>x = 1 (Ponto de Acumulação):</strong> Toda vizinhança $V_\\varepsilon(1)$ contém infinitos pontos de $A$. Isso valida a premissa de limite aproximado, permitindo-nos aproximar de $1$ com consistência real.`;
+                    } else {
+                        resBox.innerHTML = `🔴 <strong>x = 5 (Ponto Isolado):</strong> Existe um raio de vizinhança (como $\\varepsilon = 1.5$) que não contém outros elementos do conjunto a não ser ele mesmo. Logo, não podemos realizar uma aproximação limite sem quebrar a definição.`;
+                    }
+                }
+            }
+
+            if (activeModule === 'limite') {
+                const fbBox = document.getElementById('limite-feedback');
+                const eps = state.limite.epsilon;
+                const del = state.limite.delta;
+                const safeDelta = eps / 4;
+                const isSafe = del <= safeDelta;
+
+                if (fbBox) {
+                    if (isSafe) {
+                        fbBox.className = "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                        fbBox.innerHTML = `<strong>Cerco Ativo e Seguro!</strong> Com $\\delta = ${del.toFixed(3)}$, todos os valores calculados estão rigidamente aprisionados dentro do erro máximo tolerado de $\\varepsilon = ${eps.toFixed(2)}$ em torno do alvo $L=7$.`;
+                    } else {
+                        fbBox.className = "bg-rose-500/10 text-rose-300 border border-rose-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                        fbBox.innerHTML = `<strong>Vazamento Detectado!</strong> Há valores saindo da fita de controle vertical. Reduza seu $\\delta$ no painel para reestabelecer a segurança.`;
+                    }
+                }
+
+                checkpointCard.innerHTML = `
+                    <h4 class="font-bold text-sky-400 text-xs flex items-center gap-2 uppercase tracking-wider">⚡ Checkpoint de Ação 2: Cálculo Formal do Cerco</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">Provamos formalmente que $\\lim_{x \\to 2} (4x - 1) = 7$. Ao definir a tolerância $\\varepsilon = ${eps.toFixed(2)}$, determine seu ajuste de chão.</p>
+                    <div class="text-xs p-3 bg-slate-950 rounded-lg border border-slate-800 mt-2 text-slate-200">
+                        🔑 <strong>Garantia Analítica:</strong> Para que $|f(x) - 7| < ${eps.toFixed(2)}$, precisamos de $|4x - 8| < ${eps.toFixed(2)} \\implies 4|x - 2| < ${eps.toFixed(2)}$. <br>
+                        Portanto, o maior delta teórico admissível é $\\delta_{máx} = \\frac{\\varepsilon}{4} = ${safeDelta.toFixed(3)}$. <br>
+                        Seu delta atual é <span class="${isSafe ? 'text-emerald-400' : 'text-rose-400'} font-bold">${del.toFixed(3)}</span> (${isSafe ? 'SEGURO' : 'INSUFICIENTE'}).
+                    </div>
+                `;
+            }
+
+            if (activeModule === 'teoremas') {
+                const fbBox = document.getElementById('teoremas-feedback');
+                const type = state.teoremas.type;
+                const closed = state.teoremas.closed;
+
+                if (fbBox) {
+                    if (type === 'weierstrass') {
+                        if (closed) {
+                            fbBox.className = "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                            fbBox.innerHTML = `<strong>Acesso Garantido (Weierstrass):</strong> Como a curva é contínua e o intervalo $[a, b]$ é fechado e limitado, ela alcança obrigatoriamente um pico máximo absoluto e um vale mínimo absoluto no intervalo.`;
+                        } else {
+                            fbBox.className = "bg-rose-500/10 text-rose-300 border border-rose-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                            fbBox.innerHTML = `<strong>Falha de Compacidade (Aberto):</strong> Ao abrir o domínio para $(a, b)$, a função tenta tocar o ponto de máximo no limite da fronteira $b$. Mas como o extremo $b$ está expulso do domínio, o topo supremo nunca é alcançado dentro do intervalo.`;
+                        }
+                    } else {
+                        if (!state.teoremas.jump) {
+                            fbBox.className = "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                            fbBox.innerHTML = `<strong>TVI Ativo (Ponte Contínua):</strong> O Teorema do Valor Intermediário garante que uma ponte contínua que une $f(a)$ a $f(b)$ atravessa fisicamente cada nível intermediário $k$.`;
+                        } else {
+                            fbBox.className = "bg-rose-500/10 text-rose-300 border border-rose-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                            fbBox.innerHTML = `<strong>Salto e Teletransporte:</strong> Com o circuito rompido por uma descontinuidade de salto, a função passa direto por cima da linha amarela $k$ sem tocá-la, violando o teorema.`;
+                        }
+                    }
+                }
+
+                checkpointCard.innerHTML = `
+                    <h4 class="font-bold text-sky-400 text-xs flex items-center gap-2 uppercase tracking-wider">⚡ Checkpoint de Ação 3: Exploração do TVI</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">Arraste a linha tracejada amarela do nível $k$ verticalmente no gráfico. Verifique o valor de $c$ correspondente para o qual $f(c) = k$.</p>
+                    <div class="text-xs p-3 bg-slate-950 rounded-lg border border-slate-800 mt-2 text-slate-200 font-mono">
+                        ${state.teoremas.type === 'tvi' && !state.teoremas.jump ? 
+                            `🟢 <strong>Interseção Ativa:</strong> Para o nível $k = ${state.teoremas.k.toFixed(2)}$, o TVI garante que existe ao menos um valor de $c \\in [a, b]$. <br>
+                             Neste modelo, o local aproximado no eixo X é $c \\approx ${(1.3 + state.teoremas.k * 0.43).toFixed(3)}$.` : 
+                            `💡 <strong>Dica:</strong> Habilite o modo <strong>TVI</strong> e arraste a linha tracejada no gráfico para monitorar a garantia do valor intermediário.`
+                        }
+                    </div>
+                `;
+            }
+
+            if (activeModule === 'derivada') {
+                const fbBox = document.getElementById('derivada-feedback');
+                const h = state.derivada.h;
+
+                if (fbBox) {
+                    if (h > 1.1) {
+                        fbBox.className = "bg-slate-800/50 text-slate-300 border border-slate-700/50 p-4 rounded-xl text-xs leading-relaxed";
+                        fbBox.innerHTML = `<strong>Aproximação Média (Reta Secante):</strong> Com um incremento $h$ largo, a linha vermelha calcula a variação média global entre dois pontos (velocidade média).`;
+                    } else if (h > 0.05) {
+                        fbBox.className = "bg-amber-500/10 text-amber-300 border border-amber-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                        fbBox.innerHTML = `<strong>Aproximando-se do Limite:</strong> À medida que $h \\to 0$, a reta vermelha gira e se deita sobre a curva, aproximando-se da inclinação local verdadeira.`;
+                    } else {
+                        fbBox.className = "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                        fbBox.innerHTML = `<strong>Tangente Realizada (O Limite):</strong> Com $h$ nulo, a secante converge exatamente para a reta tangente (Verde Neon). Descobrimos a velocidade instantânea em $A$.`;
+                    }
+                }
+
+                checkpointCard.innerHTML = `
+                    <h4 class="font-bold text-sky-400 text-xs flex items-center gap-2 uppercase tracking-wider">⚡ Checkpoint de Ação 4: Redução do Erro e Differentiabilidade</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">Analise a linearidade local da curva no <strong>Microscópio 12x</strong> (canto superior direito do gráfico). Reduza $h$ e observe os resultados.</p>
+                    <div class="text-xs p-3 bg-slate-950 rounded-lg border border-slate-800 mt-2 text-slate-200 font-mono">
+                        📊 <strong>Dados da Secante:</strong> Incremento $h = ${h.toFixed(3)}$ | <br>
+                        Inclinação da Secante = <span class="text-rose-400 font-bold">${(0.6 + h * 0.25).toFixed(3)}</span>. <br>
+                        ${h < 0.06 ? `🎉 <strong>Limite Realizado!</strong> A inclinação coincide com a derivada teórica real: $f'(1.2) = 0.600$.` : `💡 Arraste o ponto B mais próximo de A no gráfico para forçar o limite infinitesimal.`}
+                    </div>
+                `;
+            }
+
+            if (activeModule === 'integral') {
+                const fbBox = document.getElementById('integral-feedback');
+                const n = state.integral.n;
+                const mode = state.integral.mode;
+                const exactArea = 3.0; 
+
+                let approxArea = 0;
+                const dx = 3 / n;
+                for (let i = 0; i < n; i++) {
+                    let targetX = i * dx; 
+                    if (mode === 'superior' || mode === 'direita') targetX = (i + 1) * dx;
+                    else if (mode === 'medio') targetX = (i + 0.5) * dx;
+                    
+                    if (mode === 'trap') {
+                        let yLeft = (Math.pow(i * dx, 2)) / 3;
+                        let yRight = (Math.pow((i + 1) * dx, 2)) / 3;
+                        approxArea += 0.5 * (yLeft + yRight) * dx;
+                    } else {
+                        approxArea += (Math.pow(targetX, 2) / 3) * dx;
+                    }
+                }
+
+                const errorPercent = Math.abs(approxArea - exactArea) / exactArea * 100;
+
+                if (fbBox) {
+                    if (n < 12) {
+                        fbBox.className = "bg-rose-500/10 text-rose-300 border border-rose-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                        fbBox.innerHTML = `<strong>Aproximação Grosseira (Escadas):</strong> Com poucas partições ($n = ${n}$), o erro acumulado sob a curva parabólica é visível nas frestas dos blocos.`;
+                    } else if (n < 50) {
+                        fbBox.className = "bg-amber-500/10 text-amber-300 border border-amber-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                        fbBox.innerHTML = `<strong>Ajustando os Blocos:</strong> O erro geométrico residual diminui consideravelmente. A escada se amolda progressivamente ao perfil suave da função real.`;
+                    } else {
+                        fbBox.className = "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 p-4 rounded-xl text-xs leading-relaxed";
+                        fbBox.innerHTML = `<strong>Limite de Riemann Realizado!</strong> As fatias ultrafinas eliminam o erro geométrico residual. Conforme $n \\to \\infty$, a soma de Riemann coincide com a área real.`;
+                    }
+                }
+
+                checkpointCard.innerHTML = `
+                    <h4 class="font-bold text-sky-400 text-xs flex items-center gap-2 uppercase tracking-wider">⚡ Checkpoint de Ação 5: Eficiência Metodológica</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">Compare o erro das fatias em relação à integral analítica real $\\int_{0}^{3} \\frac{x^2}{3} dx = 3.000$. Experimente alterar o algoritmo de aproximação.</p>
+                    <div class="text-xs p-3 bg-slate-950 rounded-lg border border-slate-800 mt-2 text-slate-200">
+                        📈 <strong>Soma de Riemann (${mode.toUpperCase()}):</strong> Estimativa = <span class="text-sky-400 font-bold">${approxArea.toFixed(4)}</span> | <br>
+                        Desvio Teórico Relativo = <span class="${errorPercent < 1.5 ? 'text-emerald-400' : 'text-rose-400'} font-bold">${errorPercent.toFixed(3)}%</span>.
+                    </div>
+                `;
+            }
+
+            safeRenderMath();
+        }
+
+        // =========================================================================
+        // 4. CONSTRUTOR DINÂMICO DOS PAINÉIS DE CONTROLE
+        // =========================================================================
+        function buildControls() {
+            panel.innerHTML = '';
+            
+            if (activeModule === 'reta') {
+                panel.innerHTML = `
+                    <div class="border-b border-slate-800 pb-3">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+                            1. Terreno da Reta
+                        </h3>
+                        <p class="text-xs text-slate-400">Analise a estrutura dos números no vazio ou preenchimento contínuo.</p>
+                    </div>
+                    
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Conjunto de Trabalho</label>
+                        <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800">
+                            <button class="flex-1 py-2 text-xs font-bold rounded-lg transition-all ${state.reta.mode === 'Q' ? 'bg-sky-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}" onclick="setRetaMode('Q')">Racionais (ℚ)</button>
+                            <button class="flex-1 py-2 text-xs font-bold rounded-lg transition-all ${state.reta.mode === 'R' ? 'bg-sky-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}" onclick="setRetaMode('R')">Reais (ℝ)</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono flex justify-between">
+                            Ampliação Microscópica <span class="text-sky-400 font-mono text-sm font-bold" id="lbl-zoom">${state.reta.zoom}x</span>
+                        </label>
+                        <input type="range" class="slider" min="1" max="15" step="0.5" value="${state.reta.zoom}" oninput="updateState('reta','zoom',this.value); document.getElementById('lbl-zoom').innerText=this.value+'x';">
+                    </div>
+
+                    <div id="reta-feedback" class="p-4 rounded-xl text-xs leading-relaxed"></div>
+                `;
+            } 
+            else if (activeModule === 'limite') {
+                panel.innerHTML = `
+                    <div class="border-b border-slate-800 pb-3">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            2. Jogo do Cerco
+                        </h3>
+                        <p class="text-xs text-slate-400">Encontre o passo de segurança delta no chão para encurralar a imagem.</p>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono flex justify-between">
+                            Margem de Erro Aceitável (ε) <span class="text-amber-400 font-mono text-sm font-bold" id="lbl-eps">${state.limite.epsilon}</span>
+                        </label>
+                        <input type="range" class="slider" min="0.1" max="1.0" step="0.02" value="${state.limite.epsilon}" oninput="updateState('limite','epsilon',this.value); document.getElementById('lbl-eps').innerText=parseFloat(this.value).toFixed(2);">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono flex justify-between">
+                            Largura de Controle (δ) <span class="text-sky-400 font-mono text-sm font-bold" id="lbl-del">${state.limite.delta}</span>
+                        </label>
+                        <input type="range" class="slider" min="0.02" max="0.45" step="0.01" value="${state.limite.delta}" oninput="updateState('limite','delta',this.value); document.getElementById('lbl-del').innerText=parseFloat(this.value).toFixed(3);">
+                    </div>
+
+                    <div id="limite-feedback" class="p-4 rounded-xl text-xs leading-relaxed"></div>
+                `;
+            }
+            else if (activeModule === 'teoremas') {
+                panel.innerHTML = `
+                    <div class="border-b border-slate-800 pb-3">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-violet-500"></span>
+                            3. Teoremas de Existência
+                        </h3>
+                        <p class="text-xs text-slate-400">Verifique as certezas das barreiras clássicas das funções contínuas.</p>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Teorema Ativo</label>
+                        <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800">
+                            <button class="flex-1 py-2 text-xs font-bold rounded-lg transition-all ${state.teoremas.type === 'weierstrass' ? 'bg-violet-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}" onclick="setTeoremaType('weierstrass')">Weierstrass</button>
+                            <button class="flex-1 py-2 text-xs font-bold rounded-lg transition-all ${state.teoremas.type === 'tvi' ? 'bg-violet-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}" onclick="setTeoremaType('tvi')">TVI (Valores Int.)</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Tipologia do Intervalo</label>
+                        <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800">
+                            <button class="flex-1 py-2 text-xs font-bold rounded-lg transition-all ${state.teoremas.closed ? 'bg-violet-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}" onclick="setTeoremaCerca(true)">Fechado [a, b]</button>
+                            <button class="flex-1 py-2 text-xs font-bold rounded-lg transition-all ${!state.teoremas.closed ? 'bg-violet-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}" onclick="setTeoremaCerca(false)">Aberto (a, b)</button>
+                        </div>
+                    </div>
+
+                    ${state.teoremas.type === 'tvi' ? `
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Estrutura de Transição</label>
+                        <button class="w-full py-2.5 px-4 text-xs font-bold rounded-xl transition-all border ${state.teoremas.jump ? 'bg-rose-500/10 border-rose-500/20 text-rose-400' : 'bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-800/50'}" onclick="toggleTviJump()">
+                            ${state.teoremas.jump ? '🔌 Função Descontínua (Com Salto)' : '🟢 Função Contínua (Sem Saltos)'}
+                        </button>
+                    </div>
+                    ` : ''}
+
+                    <div id="teoremas-feedback" class="p-4 rounded-xl text-xs leading-relaxed"></div>
+                `;
+            }
+            else if (activeModule === 'derivada') {
+                panel.innerHTML = `
+                    <div class="border-b border-slate-800 pb-3">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                            4. O Sonho da Tangente
+                        </h3>
+                        <p class="text-xs text-slate-400">Reduza o incremento do diferencial a limites infinitesimais.</p>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono flex justify-between">
+                            Intervalo de Distância (h) <span class="text-amber-400 font-mono text-sm font-bold" id="lbl-h">${state.derivada.h.toFixed(3)}</span>
+                        </label>
+                        <input type="range" class="slider" id="slider-derivada" min="0.01" max="2.4" step="0.01" value="${state.derivada.h}" oninput="updateState('derivada','h',this.value); document.getElementById('lbl-h').innerText=parseFloat(this.value).toFixed(3);">
+                    </div>
+
+                    <div id="derivada-feedback" class="p-4 rounded-xl text-xs leading-relaxed"></div>
+                `;
+            }
+            else if (activeModule === 'integral') {
+                panel.innerHTML = `
+                    <div class="border-b border-slate-800 pb-3">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                            5. O Grande Clonador
+                        </h3>
+                        <p class="text-xs text-slate-400">Preencha o vazio geométrico acumulando fatias retangulares.</p>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Algoritmo de Riemann</label>
+                        <div class="grid grid-cols-2 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+                            <button class="py-1.5 text-[10px] font-bold rounded-lg transition-all ${state.integral.mode === 'esquerda' ? 'bg-rose-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}" onclick="setIntegralMode('esquerda')">Esquerda</button>
+                            <button class="py-1.5 text-[10px] font-bold rounded-lg transition-all ${state.integral.mode === 'direita' ? 'bg-rose-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}" onclick="setIntegralMode('direita')">Direita</button>
+                            <button class="py-1.5 text-[10px] font-bold rounded-lg transition-all ${state.integral.mode === 'medio' ? 'bg-rose-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}" onclick="setIntegralMode('medio')">Ponto Médio</button>
+                            <button class="py-1.5 text-[10px] font-bold rounded-lg transition-all ${state.integral.mode === 'trap' ? 'bg-rose-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}" onclick="setIntegralMode('trap')">Trapézios</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono flex justify-between">
+                            Fatias da Partição (n) <span class="text-rose-400 font-mono text-sm font-bold" id="lbl-n">${state.integral.n}</span>
+                        </label>
+                        <input type="range" id="slider-n" class="slider" min="2" max="100" step="1" value="${state.integral.n}" oninput="updateState('integral','n',this.value); document.getElementById('lbl-n').innerText=this.value;">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Instrumentação Sensorial</label>
+                        <div class="flex gap-2">
+                            <button id="btn-sound-toggle" class="flex-1 py-2 text-xs font-bold rounded-xl transition-all border ${state.integral.soundEnabled ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' : 'bg-slate-950 border-slate-800 text-slate-400 hover:bg-slate-800/50'}" onclick="toggleIntegralSound()">
+                                ${state.integral.soundEnabled ? '🔊 Sinfonia Ativa' : '🔇 Ativar Sinfonia'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <button id="btn-auto-clone" class="w-full py-2.5 px-4 text-xs font-bold text-slate-950 bg-sky-400 hover:bg-sky-300 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 font-sans" onclick="triggerAutoClone()">
+                        ⚡ Auto-Clonar Infinito
+                    </button>
+
+                    <div id="integral-feedback" class="p-4 rounded-xl text-xs leading-relaxed"></div>
+                `;
+            }
+            updateFeedbacks();
+        }
+
+        function updateState(mod, key, val) {
+            state[mod][key] = parseFloat(val);
+            
+            if (mod === 'integral' && key === 'n') {
+                playChime(150 + (state.integral.n * 6));
+            }
+            
+            updateFeedbacks();
+            draw();
+        }
+
+        // Modificadores Rápidos de Estado
+        function setRetaMode(m) { state.reta.mode = m; state.reta.clickedPoint = null; buildControls(); draw(); }
+        function setTeoremaType(t) { state.teoremas.type = t; buildControls(); draw(); }
+        function setTeoremaCerca(c) { state.teoremas.closed = c; buildControls(); draw(); }
+        function toggleTviJump() { state.teoremas.jump = !state.teoremas.jump; buildControls(); draw(); }
+        function setIntegralMode(m) { state.integral.mode = m; buildControls(); draw(); }
+        function toggleIntegralSound() { state.integral.soundEnabled = !state.integral.soundEnabled; buildControls(); draw(); }
+
+        // =========================================================================
+        // 5. NAVEGADOR DE MENUS LATERAIS
+        // =========================================================================
+        function switchModule(mod) {
+            activeModule = mod;
+            
+            if (state.integral.animInterval) {
+                clearInterval(state.integral.animInterval);
+                state.integral.isAnimating = false;
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-sky-500/10', 'text-sky-400', 'border', 'border-sky-500/20');
+                btn.classList.add('text-slate-400', 'hover:bg-slate-800/40', 'hover:text-slate-100');
+            });
+            
+            const activeBtn = document.getElementById(`btn-${mod}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-400', 'hover:bg-slate-800/40', 'hover:text-slate-100');
+                activeBtn.classList.add('bg-sky-500/10', 'text-sky-400', 'border', 'border-sky-500/20');
+                
+                // Rolar o menu de módulos horizontalmente no celular se necessário
+                activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
+            document.getElementById('canvas-badge').innerText = `Módulo Ativo: ${mod.toUpperCase()}`;
+
+            buildControls();
+            resizeCanvas();
+            draw(); // FORÇAR renderização imediata do módulo atual ao trocar de aba!
+        }
+
+        // =========================================================================
+        // 6. ADAPTAÇÃO E RESOLUÇÃO DO CANVAS (À PROVA DE REDIMENSIONAMENTO FANTASMA)
+        // =========================================================================
+        function resizeCanvas() {
+            const currentWidth = holder.clientWidth;
+            const currentHeight = holder.clientHeight;
+            
+            // Se as dimensões físicas ainda são zero (painel oculto durante montagem), aborta para evitar bugs
+            if (currentWidth <= 0 || currentHeight <= 0) return false;
+
+            // Se as dimensões não mudaram, não precisamos recriar o backing store do canvas
+            if (currentWidth === lastWidth && currentHeight === lastHeight) {
+                return true;
+            }
+
+            logicalWidth = currentWidth;
+            logicalHeight = currentHeight;
+            lastWidth = currentWidth;
+            lastHeight = currentHeight;
+            
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = logicalWidth * dpr;
+            canvas.height = logicalHeight * dpr;
+            
+            ctx.resetTransform();
+            ctx.scale(dpr, dpr);
+            return true;
+        }
+
+        // =========================================================================
+        // 7. ARRASTO DIRETO E FILTRAGEM INTELIGENTE DE TOQUES MÓVEIS (Rolar Livre)
+        // =========================================================================
+        function getCanvasMouseCoords(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        }
+
+        // handleStart agora retorna TRUE apenas se tocarmos em um elemento manipulável legítimo
+        function handleStart(x, y) {
+            isDragging = true;
+            mouseX = x;
+            mouseY = y;
+            let hitInteractive = false; // Sinaliza se capturou um nó físico do simulador
+
+            if (activeModule === 'reta') {
+                const cy = logicalHeight / 2;
+                const step = 45 * state.reta.zoom;
+                const startX = logicalWidth / 2;
+                
+                const pAcX = startX + step * 1; 
+                const pIsX = startX + step * 5; 
+
+                // Sensibilidade de toque expandida em celulares (24px)
+                if (Math.abs(x - pAcX) < 24 && Math.abs(y - cy) < 24) {
+                    state.reta.clickedPoint = 'acumulacao';
+                    playChime(440, 0.15);
+                    updateFeedbacks();
+                    draw();
+                    hitInteractive = true;
+                } else if (Math.abs(x - pIsX) < 24 && Math.abs(y - cy) < 24) {
+                    state.reta.clickedPoint = 'isolado';
+                    playChime(220, 0.15);
+                    updateFeedbacks();
+                    draw();
+                    hitInteractive = true;
+                }
+            }
+            else if (activeModule === 'limite') {
+                const { originX, originY, scaleX, scaleY } = getLimiteParams();
+
+                const x0 = 2;
+                const L = 7;
+                
+                const pDelRightX = originX + ((x0 + state.limite.delta) * scaleX);
+                const epsYTop = originY - ((L + state.limite.epsilon) * scaleY);
+                const epsYBot = originY - ((L - state.limite.epsilon) * scaleY);
+
+                if (Math.abs(y - epsYTop) < 24 || Math.abs(y - epsYBot) < 24) {
+                    state.limite.dragMode = 'eps';
+                    hitInteractive = true;
+                } else if (Math.abs(x - pDelRightX) < 24) {
+                    state.limite.dragMode = 'del';
+                    hitInteractive = true;
+                }
+            }
+            else if (activeModule === 'teoremas') {
+                if (state.teoremas.type === 'tvi') {
+                    const originY = logicalHeight - 60;
+                    const h = logicalHeight - 120;
+                    const targetY = originY - (state.teoremas.k / 3) * h;
+                    if (Math.abs(y - targetY) < 24) {
+                        state.teoremas.dragY = true;
+                        hitInteractive = true;
+                    }
+                }
+            }
+            else if (activeModule === 'derivada') {
+                const { originX, originY, scale } = getDerivadaParams();
+                const xA = 1.2;
+                const xB = xA + state.derivada.h;
+                
+                const pBX = originX + xB * scale;
+                const pBY = originY - f_derivada(xB) * scale;
+
+                if (Math.abs(x - pBX) < 24 && Math.abs(y - pBY) < 24) {
+                    state.derivada.draggingB = true;
+                    hitInteractive = true;
+                }
+            }
+
+            if (!hitInteractive) {
+                isDragging = false; // Libera o estado de arrasto se foi toque em fundo neutro
+            }
+
+            return hitInteractive;
+        }
+
+        function handleMove(x, y) {
+            if (!isDragging) {
+                canvas.style.cursor = 'crosshair';
+                
+                if (activeModule === 'reta') {
+                    const cy = logicalHeight / 2;
+                    const step = 45 * state.reta.zoom;
+                    const startX = logicalWidth / 2;
+                    if (Math.abs(x - (startX + step)) < 24 && Math.abs(y - cy) < 24) canvas.style.cursor = 'pointer';
+                    if (Math.abs(x - (startX + step * 5)) < 24 && Math.abs(y - cy) < 24) canvas.style.cursor = 'pointer';
+                }
+                else if (activeModule === 'limite') {
+                    const { originX, originY, scaleX, scaleY } = getLimiteParams();
+                    const x0 = 2, L = 7;
+                    const epsYTop = originY - ((L + state.limite.epsilon) * scaleY);
+                    const pDelRightX = originX + ((x0 + state.limite.delta) * scaleX);
+
+                    if (Math.abs(y - epsYTop) < 24) canvas.style.cursor = 'ns-resize';
+                    else if (Math.abs(x - pDelRightX) < 24) canvas.style.cursor = 'ew-resize';
+                }
+                else if (activeModule === 'teoremas') {
+                    if (state.teoremas.type === 'tvi') {
+                        const originY = logicalHeight - 60;
+                        const h = logicalHeight - 120;
+                        const targetY = originY - (state.teoremas.k / 3) * h;
+                        if (Math.abs(y - targetY) < 24) canvas.style.cursor = 'ns-resize';
+                    }
+                }
+                else if (activeModule === 'derivada') {
+                    const { originX, scale } = getDerivadaParams();
+                    const xB = 1.2 + state.derivada.h;
+                    const pBX = originX + xB * scale;
+                    const pBY = (logicalHeight / 2 + 1.2 * scale) - f_derivada(xB) * scale;
+                    if (Math.abs(x - pBX) < 24 && Math.abs(y - pBY) < 24) canvas.style.cursor = 'grab';
+                }
+                return;
+            }
+
+            if (activeModule === 'limite' && state.limite.dragMode) {
+                const { originX, originY, scaleX, scaleY } = getLimiteParams();
+                const x0 = 2, L = 7;
+
+                if (state.limite.dragMode === 'eps') {
+                    const targetEps = (originY - y) / scaleY - L;
+                    const boundedEps = Math.max(0.1, Math.min(1.0, Math.abs(targetEps)));
+                    state.limite.epsilon = boundedEps;
+                } else if (state.limite.dragMode === 'del') {
+                    const targetDel = (x - originX) / scaleX - x0;
+                    const boundedDel = Math.max(0.02, Math.min(0.45, Math.abs(targetDel)));
+                    state.limite.delta = boundedDel;
+                }
+                updateFeedbacks();
+                draw();
+            }
+            else if (activeModule === 'teoremas' && state.teoremas.dragY) {
+                const originY = logicalHeight - 60;
+                const h = logicalHeight - 120;
+                const rawK = ((originY - y) / h) * 3;
+                const boundedK = Math.max(0.1, Math.min(2.8, rawK));
+                state.teoremas.k = boundedK;
+                updateFeedbacks();
+                draw();
+            }
+            else if (activeModule === 'derivada' && state.derivada.draggingB) {
+                const { originX, scale } = getDerivadaParams();
+                const xA = 1.2;
+                const targetXB = (x - originX) / scale;
+                const boundedH = Math.max(0.01, Math.min(2.4, targetXB - xA));
+                state.derivada.h = boundedH;
+                
+                const slider = document.getElementById('slider-derivada');
+                if (slider) slider.value = boundedH;
+                const lbl = document.getElementById('lbl-h');
+                if (lbl) lbl.innerText = boundedH.toFixed(3);
+
+                updateFeedbacks();
+                draw();
+            }
+        }
+
+        // =========================================================================
+        // 8. AUTO-CLONADOR E BOOTSTRAP DO SISTEMA
+        // =========================================================================
+        function handleEnd() {
+            isDragging = false;
+            state.limite.dragMode = null;
+            state.teoremas.dragY = null;
+            state.derivada.draggingB = false;
+        }
+
+        // Listeners Mouse (Desktop)
+        canvas.addEventListener('mousedown', (e) => {
+            const coords = getCanvasMouseCoords(e);
+            handleStart(coords.x, coords.y);
+        });
+        canvas.addEventListener('mousemove', (e) => {
+            const coords = getCanvasMouseCoords(e);
+            handleMove(coords.x, coords.y);
+        });
+        window.addEventListener('mouseup', handleEnd);
+
+        // Listeners Touch OTIMIZADOS (Celular)
+        canvas.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                const coords = getCanvasMouseCoords(e.touches[0]);
+                touchInteractiveActive = handleStart(coords.x, coords.y);
+                if (touchInteractiveActive) {
+                    e.preventDefault(); // Bloqueia rolagem apenas ao arrastar elementos interativos
+                }
+            }
+        }, { passive: false });
+
+        canvas.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1) {
+                if (touchInteractiveActive) {
+                    const coords = getCanvasMouseCoords(e.touches[0]);
+                    handleMove(coords.x, coords.y);
+                    e.preventDefault(); // Evita a trepidação apenas se arrastando o ponto
+                }
+            }
+        }, { passive: false });
+
+        window.addEventListener('touchend', () => {
+            handleEnd();
+            touchInteractiveActive = false;
+        });
+
+        function triggerAutoClone() {
+            if (state.integral.isAnimating) {
+                clearInterval(state.integral.animInterval);
+                state.integral.isAnimating = false;
+                const btn = document.getElementById('btn-auto-clone');
+                if (btn) {
+                    btn.innerText = '⚡ Auto-Clonar Infinito';
+                    btn.className = "w-full py-2.5 px-4 text-xs font-bold text-slate-950 bg-sky-400 hover:bg-sky-300 rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5 font-sans";
+                }
+                return;
+            }
+
+            state.integral.isAnimating = true;
+            const btn = document.getElementById('btn-auto-clone');
+            if (btn) {
+                btn.innerText = '🛑 Pausar Simulação';
+                btn.className = "w-full py-2.5 px-4 text-xs font-bold text-slate-100 bg-rose-600 hover:bg-rose-500 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 font-sans";
+            }
+            
+            let count = state.integral.n;
+            state.integral.animInterval = setInterval(() => {
+                count += 1;
+                if (count > 100) count = 2;
+                state.integral.n = count;
+                
+                const slider = document.getElementById('slider-n');
+                if (slider) slider.value = count;
+                const lbl = document.getElementById('lbl-n');
+                if (lbl) lbl.innerText = count;
+
+                if (count % 3 === 0) {
+                    playChime(150 + (count * 5));
+                }
+
+                updateFeedbacks();
+                draw();
+            }, 85);
+        }
+
+        // Inicialização global limpa e segura
+        function initSystem() {
+            buildControls();
+            switchModule('reta'); // Redireciona e desenha o primeiro módulo
+            safeRenderMath();
+
+            // Configurar ResizeObserver moderno para gerenciar o layout de forma fluida
+            const resizeObserver = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    if (resizeCanvas()) {
+                        draw();
+                    }
+                }
+            });
+            resizeObserver.observe(holder);
+        }
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(initSystem, 50);
+        } else {
+            window.addEventListener('load', () => setTimeout(initSystem, 50));
+        }
+    </script>
+</body>
+</html>
